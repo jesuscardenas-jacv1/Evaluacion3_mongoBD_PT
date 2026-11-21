@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modelos de lámina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* Modelos de la lamina "El problema": galaxia de fondo (sin VHS), panel gris oscuro, jerarquia clara.
+   Teclas 1, 2 y 3 cambian de modelo. */
+:root{
+  color-scheme:dark;
+  --bg:#03070c;
+  --panel:rgba(17,20,25,.94);
+  --panel-2:#181c22;
+  --line:rgba(255,255,255,.09);
+  --ink:#f2f5f3;
+  --ink-2:#aab3b0;
+  --ink-3:#7c8683;
+  --acc:#00ed64;
+  --acc-soft:rgba(0,237,100,.12);
+  --head:"Space Grotesk","Segoe UI",system-ui,sans-serif;
+  --body:"Inter","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",Consolas,monospace;
+}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);overflow:hidden;font-family:var(--body)}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
+h1,h2,h3,p{margin:0}
+.model{position:fixed;inset:0;display:none}
+.model.on{display:block}
+.eyebrow{font:500 14px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--acc);
+  display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:28px;height:2px;background:var(--acc)}
+.ico{width:26px;height:26px;stroke:var(--acc);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* selector de modelo (solo para elegir) */
+.picker{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:10;display:flex;gap:6px;
+  background:rgba(17,20,25,.9);border:1px solid var(--line);border-radius:999px;padding:5px}
+.picker button{font:500 14px var(--body);color:var(--ink-2);background:none;border:0;border-radius:999px;
+  padding:9px 16px;cursor:pointer;min-height:40px}
+.picker button.on{background:var(--acc);color:#04140a}
+
+/* ========== MODELO A: panel central ========== */
+.a-panel{position:absolute;left:50%;top:50%;transform:translate(-50%,-48%);width:min(1180px,88vw);
+  padding:clamp(32px,4.5vw,60px) clamp(28px,5vw,68px);background:var(--panel);border:1px solid var(--line);
+  border-radius:20px;box-shadow:0 40px 100px rgba(0,0,0,.55)}
+.a-panel h1{font:700 clamp(40px,4.6vw,64px)/1.05 var(--head);letter-spacing:-.02em;margin-top:20px}
+.a-panel .lead{font-size:clamp(19px,1.6vw,23px);line-height:1.5;color:var(--ink-2);margin-top:16px;max-width:48ch}
+.a-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:clamp(28px,4vh,44px);border-top:1px solid var(--line)}
+.a-item{padding:28px 28px 4px 0}
+.a-item + .a-item{padding-left:28px;border-left:1px solid var(--line)}
+.a-item .n{font:500 14px var(--mono);color:var(--ink-3);display:flex;justify-content:space-between;align-items:center}
+.a-item h3{font:600 clamp(20px,1.75vw,25px)/1.25 var(--head);margin-top:18px}
+.a-item p{font-size:clamp(16px,1.3vw,18px);line-height:1.55;color:var(--ink-2);margin-top:10px}
+.a-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px;margin-top:clamp(24px,3.5vh,36px);
+  padding-top:22px;border-top:1px solid var(--line);font-size:16px;color:var(--ink-3)}
+.a-foot b{font-weight:600;color:var(--ink)}
+.a-foot .lbl{font:500 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ========== MODELO B: dividido ========== */
+.b-left{position:absolute;left:7vw;top:50%;transform:translateY(-50%);width:34vw}
+.b-left h1{font:700 clamp(48px,6vw,88px)/.98 var(--head);letter-spacing:-.03em;margin-top:24px}
+.b-left .lead{font-size:clamp(19px,1.6vw,24px);line-height:1.5;color:#c9d1ce;margin-top:22px}
+.b-aff{margin-top:40px}
+.b-aff .lbl{font:500 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.b-aff ul{list-style:none;padding:0;margin:14px 0 0;display:flex;gap:10px;flex-wrap:wrap}
+.b-aff li{font:500 15px var(--body);padding:9px 16px;border-radius:999px;background:rgba(17,20,25,.85);border:1px solid var(--line)}
+.b-panel{position:absolute;right:6vw;top:50%;transform:translateY(-50%);width:46vw;background:var(--panel);
+  border:1px solid var(--line);border-radius:20px;box-shadow:0 40px 100px rgba(0,0,0,.55);overflow:hidden}
+.b-row{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:start;padding:clamp(24px,3.6vh,36px) clamp(24px,2.8vw,40px)}
+.b-row + .b-row{border-top:1px solid var(--line)}
+.b-row .n{font:700 clamp(34px,3.2vw,48px)/1 var(--head);color:transparent;-webkit-text-stroke:1.5px var(--acc);width:2.2ch}
+.b-row h3{font:600 clamp(21px,1.8vw,27px)/1.25 var(--head)}
+.b-row p{font-size:clamp(16px,1.3vw,19px);line-height:1.55;color:var(--ink-2);margin-top:8px}
+
+/* ========== MODELO C: centro de control ========== */
+.c-bar{position:absolute;left:0;right:0;top:0;height:64px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 5vw;background:rgba(14,17,21,.96);border-bottom:1px solid var(--line);font:500 14px var(--mono);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.c-bar b{color:var(--ink);font-weight:500}
+.c-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--acc);margin-right:10px;
+  box-shadow:0 0 10px var(--acc)}
+.c-main{position:absolute;left:5vw;right:5vw;top:calc(64px + 6vh);bottom:9vh;display:grid;
+  grid-template-columns:1.05fr 1fr;gap:24px}
+.c-hero{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:clamp(28px,3.4vw,48px);
+  display:flex;flex-direction:column}
+.c-hero h1{font:700 clamp(40px,4.4vw,64px)/1.02 var(--head);letter-spacing:-.02em;margin-top:22px}
+.c-hero .lead{font-size:clamp(19px,1.6vw,23px);line-height:1.5;color:var(--ink-2);margin-top:18px}
+.c-aff{margin-top:auto;padding-top:24px;border-top:1px solid var(--line)}
+.c-aff .lbl{font:500 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.c-aff .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.c-aff .grid div{background:var(--panel-2);border-radius:12px;padding:14px 16px}
+.c-aff b{display:block;font:600 16px var(--head)}
+.c-aff span{display:block;font-size:14px;line-height:1.4;color:var(--ink-3);margin-top:4px}
+.c-list{display:grid;grid-template-rows:repeat(3,1fr);gap:16px}
+.c-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,2.6vh,28px) clamp(22px,2vw,30px);
+  display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center}
+.c-card .ic{width:56px;height:56px;border-radius:14px;background:var(--acc-soft);display:grid;place-items:center}
+.c-card h3{font:600 clamp(20px,1.7vw,25px)/1.25 var(--head)}
+.c-card p{font-size:clamp(15px,1.25vw,18px);line-height:1.5;color:var(--ink-2);margin-top:6px}
+.c-team{position:absolute;left:5vw;bottom:3vh;font-size:14px;color:var(--ink-3)}
+.c-team b{color:var(--ink-2);font-weight:500}
+
+@media (max-width:900px){
+  html,body{overflow:auto}
+  .model{position:relative;min-height:100vh}
+  .a-panel,.b-left,.b-panel{position:relative;left:auto;right:auto;top:auto;transform:none;width:auto;margin:80px 16px 24px}
+  .a-grid,.c-aff .grid{grid-template-columns:1fr}
+  .a-item + .a-item{padding-left:0;border-left:0;border-top:1px solid var(--line)}
+  .c-main{position:relative;left:auto;right:auto;top:auto;bottom:auto;grid-template-columns:1fr;margin:90px 16px 60px}
+}
+</style>
+</head>
+<body>
+<canvas id="space"></canvas>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-form" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M8.5 10h7M8.5 14h7M8.5 18h4"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2.5 20h19z"/><path d="M12 10v4.5M12 17.5v.01"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
+</svg>
+
+<div class="picker" role="tablist">
+  <button data-m="0" class="on">Modelo A · Panel central</button>
+  <button data-m="1">Modelo B · Dividido</button>
+  <button data-m="2">Modelo C · Centro de control</button>
+</div>
+
+<!-- ===== MODELO A ===== -->
+<section class="model on">
+  <div class="a-panel">
+    <div class="eyebrow">01 · Contexto</div>
+    <h1>El problema</h1>
+    <p class="lead">La demanda de pedidos superó lo que el equipo de reparto puede controlar a mano.</p>
+    <div class="a-grid">
+      <div class="a-item">
+        <div class="n">01 <svg class="ico"><use href="#i-form"/></svg></div>
+        <h3>Cada repartidor informa a su manera</h3>
+        <p>No existe un formato común para registrar una entrega.</p>
+      </div>
+      <div class="a-item">
+        <div class="n">02 <svg class="ico"><use href="#i-alert"/></svg></div>
+        <h3>Fallos sin motivo claro</h3>
+        <p>La causa se escribe en texto libre o no se registra.</p>
+      </div>
+      <div class="a-item">
+        <div class="n">03 <svg class="ico"><use href="#i-bell"/></svg></div>
+        <h3>Avisos manuales al cliente</h3>
+        <p>Llegan tarde y con errores.</p>
+      </div>
+    </div>
+    <div class="a-foot">
+      <span class="lbl">Afecta a</span>
+      <span><b>Logística</b> · no sabe qué rutas terminaron</span>
+      <span><b>Repartidores</b> · sin validación en terreno</span>
+      <span><b>Clientes</b> · sin información de su pedido</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODELO B ===== -->
+<section class="model">
+  <div class="b-left">
+    <div class="eyebrow">01 · Contexto</div>
+    <h1>El<br>problema</h1>
+    <p class="lead">La demanda de pedidos superó lo que el equipo de reparto puede controlar a mano.</p>
+    <div class="b-aff">
+      <div class="lbl">Afecta a</div>
+      <ul><li>Logística</li><li>Repartidores</li><li>Clientes</li></ul>
+    </div>
+  </div>
+  <div class="b-panel">
+    <div class="b-row"><span class="n">01</span><div><h3>Cada repartidor informa a su manera</h3><p>No existe un formato común para registrar una entrega.</p></div></div>
+    <div class="b-row"><span class="n">02</span><div><h3>Fallos sin motivo claro</h3><p>La causa se escribe en texto libre o no se registra.</p></div></div>
+    <div class="b-row"><span class="n">03</span><div><h3>Avisos manuales al cliente</h3><p>Llegan tarde y con errores.</p></div></div>
+  </div>
+</section>
+
+<!-- ===== MODELO C ===== -->
+<section class="model">
+  <div class="c-bar">
+    <span><span class="dot"></span><b>App de Gestión de Reparto</b> · Evaluación 3 · MongoDB Atlas</span>
+    <span>01 / 08 · Contexto</span>
+  </div>
+  <div class="c-main">
+    <div class="c-hero">
+      <div class="eyebrow">01 · Contexto</div>
+      <h1>El problema</h1>
+      <p class="lead">La demanda de pedidos superó lo que el equipo de reparto puede controlar a mano.</p>
+      <div class="c-aff">
+        <div class="lbl">Afecta a</div>
+        <div class="grid">
+          <div><b>Logística</b><span>No sabe qué rutas terminaron</span></div>
+          <div><b>Repartidores</b><span>Sin validación en terreno</span></div>
+          <div><b>Clientes</b><span>Sin información de su pedido</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="c-list">
+      <div class="c-card"><div class="ic"><svg class="ico"><use href="#i-form"/></svg></div><div><h3>Cada repartidor informa a su manera</h3><p>No existe un formato común para registrar una entrega.</p></div></div>
+      <div class="c-card"><div class="ic"><svg class="ico"><use href="#i-alert"/></svg></div><div><h3>Fallos sin motivo claro</h3><p>La causa se escribe en texto libre o no se registra.</p></div></div>
+      <div class="c-card"><div class="ic"><svg class="ico"><use href="#i-bell"/></svg></div><div><h3>Avisos manuales al cliente</h3><p>Llegan tarde y con errores.</p></div></div>
+    </div>
+  </div>
+  <div class="c-team"><b>Jesús Cárdenas · Ramón Osorio · Lucas Saldivia</b> · Sección 004V · DUOC UC</div>
+</section>
+
+<script>
+{
+/* galaxia de fondo (la misma de la portada, sin filtro VHS) */
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const space = document.getElementById('space'), sx = space.getContext('2d');
+let W = 0, H = 0, stars = [], galaxy = [], mx = 0, my = 0;
+const rnd = (a, b) => a + Math.random() * (b - a);
+
+function build(){
+  const DPR = Math.min(devicePixelRatio || 1, 2);
+  W = innerWidth; H = innerHeight;
+  space.width = Math.max(1, W * DPR); space.height = Math.max(1, H * DPR);
+  sx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  stars = Array.from({length: Math.round(W * H / 2600)}, () => ({
+    x: Math.random() * W, y: Math.random() * H, z: rnd(.2, 1),
+    r: Math.random() < .04 ? rnd(1.2, 1.9) : rnd(.3, 1.1), t: rnd(0, 6.28), s: rnd(.6, 2.2),
+    c: Math.random() < .15 ? '200,220,255' : Math.random() < .1 ? '255,225,190' : '240,248,255'
+  }));
+  galaxy = Array.from({length: 6000}, () => {
+    const arm = Math.floor(Math.random() * 2), d = Math.pow(Math.random(), 1.1);
+    return {d, a: arm * Math.PI + d * 6 + rnd(-.3, .3) * (1 - d * .4), off: rnd(-.04, .04), r: rnd(.4, 1.4), b: rnd(.35, 1)};
+  });
+}
+function nebula(x, y, r, c){
+  const g = sx.createRadialGradient(x, y, 0, x, y, r);
+  g.addColorStop(0, c); g.addColorStop(1, 'rgba(0,0,0,0)');
+  sx.fillStyle = g; sx.fillRect(0, 0, W, H);
+}
+function frame(t){
+  sx.fillStyle = '#03070c'; sx.fillRect(0, 0, W, H);
+  nebula(W*.72, H*.35, W*.45, 'rgba(40,90,110,.28)');
+  nebula(W*.25, H*.7, W*.5, 'rgba(30,70,65,.35)');
+  nebula(W*.9, H*.85, W*.3, 'rgba(90,50,110,.18)');
+  const cx = W * .84 - mx * 6, cy = H * .3 - my * 6, R = Math.min(W, H) * .62, rot = t * .000015;
+  const core = sx.createRadialGradient(cx, cy, 0, cx, cy, R * .3);
+  core.addColorStop(0, 'rgba(255,240,215,.5)'); core.addColorStop(.4, 'rgba(160,190,220,.15)'); core.addColorStop(1, 'rgba(0,0,0,0)');
+  sx.fillStyle = core; sx.beginPath(); sx.arc(cx, cy, R * .3, 0, 7); sx.fill();
+  for (const p of galaxy){
+    const a = p.a + rot, rr = p.d * R;
+    const x0 = Math.cos(a) * rr + p.off * R, y0 = Math.sin(a) * rr * .38 + p.off * R * .25;
+    sx.fillStyle = p.d < .25 ? `rgba(255,236,210,${p.b*.8})` : (p.d > .5 && p.b > .9 ? `rgba(220,170,230,${(1-p.d)*.7})` : `rgba(175,210,235,${p.b*(1-p.d*.8)*.6})`);
+    sx.fillRect(cx + x0 * .96 - y0 * .28, cy + x0 * .28 + y0 * .96, p.r, p.r);
+  }
+  for (const s of stars){
+    const tw = reduce ? .8 : .55 + .45 * Math.sin(s.t + t * .001 * s.s);
+    const x = (s.x - mx * 14 * s.z - t * .004 * s.z + W * 4) % W, y = s.y - my * 10 * s.z;
+    sx.fillStyle = `rgba(${s.c},${tw * (s.z * .7 + .3)})`;
+    sx.beginPath(); sx.arc(x, y, s.r, 0, 7); sx.fill();
+  }
+  requestAnimationFrame(frame);
+}
+addEventListener('pointermove', e => { mx = e.clientX / W - .5; my = e.clientY / H - .5; });
+addEventListener('resize', build);
+build(); requestAnimationFrame(frame);
+
+/* selector de modelo: botones o teclas 1, 2, 3 */
+const models = [...document.querySelectorAll('.model')], btns = [...document.querySelectorAll('.picker button')];
+function show(i){ models.forEach((m, j) => m.classList.toggle('on', j === i)); btns.forEach((b, j) => b.classList.toggle('on', j === i)); }
+btns.forEach((b, i) => b.addEventListener('click', () => show(i)));
+addEventListener('keydown', e => { const i = '123'.indexOf(e.key); if (i >= 0) show(i); });
+}
+</script>
+</body>
+</html>
