@@ -14,4 +14,4 @@
 - Cada integrante puede defender un momento del día (crear, buscar, actualizar, eliminar).
 - El arreglo `incidentes` es un buen argumento de por qué conviene NoSQL: en Oracle no existía una tabla para eso.
 
-**Estado:** pendiente de decisión del equipo.
+**Estado:** ✅ **Elegido el Escenario 2: Hoja de Ruta Digital** (`reparto_db.hojas_ruta`).

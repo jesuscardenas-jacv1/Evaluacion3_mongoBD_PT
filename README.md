@@ -20,7 +20,7 @@ codigo/
 
 ## Próximos pasos
 
-- [ ] Elegir el escenario final
+- [x] Elegir el escenario final → **Escenario 2: Hoja de Ruta Digital** (`reparto_db.hojas_ruta`)
 - [ ] Script CRUD `.mongodb.js` (insertOne/insertMany, find, update, delete)
 - [ ] Presentación de la defensa
 - [ ] Informe
