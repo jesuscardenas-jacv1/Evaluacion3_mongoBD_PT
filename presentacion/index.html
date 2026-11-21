@@ -27,28 +27,21 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .alien img{object-fit:contain;object-position:left bottom;visibility:hidden}
 .alien.nogl img{visibility:visible}
 
-/* --- titulo estilo juego --- */
-.title{position:absolute;right:6vw;top:16vh;width:min(46vw,620px);text-align:center;opacity:0}
-.title.go{animation:fadeup 1.4s ease-out 2.4s forwards}
-.title small{display:block;font-size:22px;color:var(--dim);margin-bottom:14px}
-.title h1{margin:0;font:400 clamp(22px,3.6vw,50px)/1.25 "Press Start 2P",monospace;color:#f3fff7;
+/* --- titulo: centrado en vertical a la derecha --- */
+.title{position:absolute;right:6vw;top:0;bottom:0;width:min(46vw,640px);display:flex;flex-direction:column;
+  justify-content:center;text-align:center;opacity:0}
+.title.go{animation:fadeup 1.4s ease-out 1.2s forwards}
+.title h1{margin:0;font:400 clamp(22px,3.4vw,48px)/1.35 "Press Start 2P",monospace;color:#f3fff7;
   text-shadow:2px 0 rgba(255,40,80,.55),-2px 0 rgba(40,220,255,.55),0 0 18px rgba(157,255,198,.35)}
-.title .sub{margin:16px 0 0;font-size:clamp(22px,2vw,30px);color:var(--glow)}
-.title .team{margin:6px 0 0;font-size:clamp(18px,1.5vw,22px);color:var(--dim)}
-.start{margin-top:4vh;font:400 clamp(11px,1.1vw,15px) "Press Start 2P",monospace;color:var(--glow);
-  background:none;border:0;cursor:pointer;padding:12px 16px;animation:blink 1.1s steps(1) infinite}
-.start:focus-visible{outline:2px solid var(--glow)}
-@keyframes blink{50%{opacity:0}}
+.title .sub{margin:3.5vh 0 0;font:400 clamp(11px,1.15vw,16px)/1.6 "Press Start 2P",monospace;color:var(--glow);
+  letter-spacing:.06em}
 @keyframes fadeup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 
-/* --- dialogo --- */
-.dlg{position:absolute;right:6vw;bottom:8vh;width:min(46vw,620px);min-height:120px;padding:18px 22px;
-  background:rgba(4,14,12,.72);border:3px solid #cfe9dc;box-shadow:0 0 0 3px #0a1612,0 0 0 6px #5f7d72;
-  opacity:0}
-.dlg.go{animation:fadeup .8s ease-out 3.6s forwards}
-.dlg b{display:block;color:var(--glow);font-weight:400;font-size:20px;margin-bottom:4px}
-.dlg p{margin:0;font-size:clamp(22px,1.9vw,28px)}
-.caret{display:inline-block;width:.5em;animation:blink .7s steps(1) infinite}
+/* --- creditos en la esquina inferior izquierda --- */
+.credits{position:absolute;left:4vw;bottom:3vh;font-size:clamp(18px,1.5vw,24px);line-height:1.25;color:#d6e4dc;
+  text-shadow:1px 0 rgba(255,50,80,.5),-1px 0 rgba(40,220,255,.5),0 0 6px #000,0 0 12px #000;opacity:0}
+.credits.go{animation:fadeup 1s ease-out 2s forwards}
+.credits b{font-weight:400;color:var(--glow)}
 
 /* --- capa VHS --- */
 .vhs{position:absolute;inset:0;pointer-events:none}
@@ -59,21 +52,15 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
   backdrop-filter:blur(1px) brightness(1.15);animation:track 11s linear infinite}
 @keyframes track{0%,70%{top:-10vh}100%{top:110vh}}
 @keyframes jit{0%,100%{transform:none}91%{transform:translateX(2px)}92%{transform:translateX(-1px)}93%{transform:none}}
-.hud{position:absolute;font-size:30px;color:#f0f6f2;text-shadow:1px 0 rgba(255,50,80,.6),-1px 0 rgba(40,220,255,.6)}
-.hud.tl{top:3vh;right:4vw}.hud.br{bottom:2.5vh;left:4vw;font-size:24px;color:#d6e4dc}
-.replay{position:absolute;top:2.6vh;left:4vw;font:22px "VT323",monospace;color:var(--dim);background:none;
-  border:1px solid #2c3d37;padding:6px 12px;cursor:pointer;min-height:44px}
-.replay:hover{color:var(--ink)}
 
 @media (max-width:700px){
   .alien{height:62vh;left:-12vw;bottom:-2vh}
-  .title{left:5vw;right:5vw;width:auto;top:12vh}
-  .dlg{left:5vw;right:5vw;width:auto;bottom:8vh}
-  .hud.br{bottom:1.5vh;font-size:20px}
+  .title{left:5vw;right:5vw;width:auto;top:10vh;bottom:auto}
+  .credits{bottom:2vh;font-size:18px}
 }
 @media (prefers-reduced-motion:reduce){
-  .title.go,.dlg.go{animation-duration:.01s;animation-delay:0s}
-  .track,.stage,.start{animation:none}
+  .title.go,.credits.go{animation-duration:.01s;animation-delay:0s}
+  .track,.stage{animation:none}
 }
 </style>
 </head>
@@ -97,25 +84,19 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
   </div>
 
   <div class="title" id="title">
-    <small>— EVALUACIÓN 3 · MONGODB ATLAS —</small>
-    <h1>HOJA DE RUTA<br>DIGITAL</h1>
-    <p class="sub">App de Gestión de Reparto</p>
-    <p class="team">Jesús Cárdenas · Ramón Osorio · Lucas Saldivia</p>
-    <button class="start" id="start">PRESIONA START</button>
-  </div>
-
-  <div class="dlg" id="dlg">
-    <b>???</b>
-    <p><span id="typed"></span><span class="caret">▌</span></p>
+    <h1>APP DE GESTIÓN<br>DE REPARTO</h1>
+    <p class="sub">EVALUACIÓN 3 · MONGODB ATLAS</p>
   </div>
 
   <canvas id="noise"></canvas>
   <div class="vhs scan"></div>
   <div class="vhs"><div class="track"></div></div>
   <div class="vhs vig"></div>
-  <div class="hud tl">PLAY ▶</div>
-  <div class="hud br" id="clock">SP 00:00:00</div>
-  <button class="replay" id="replay">↺ repetir</button>
+  <div class="credits" id="credits">
+    <div>Jesús Cárdenas · Ramón Osorio · Lucas Saldivia</div>
+    <div><b>Sección 004V</b> · Docente: [nombre del docente]</div>
+    <div>DUOC UC</div>
+  </div>
 </div>
 
 <script>
@@ -207,32 +188,11 @@ function frame(t){
 
 addEventListener('pointermove', e => { mx = e.clientX / W - .5; my = e.clientY / H - .5; });
 
-/* reloj VHS */
-const clock = document.getElementById('clock'); let t0 = Date.now();
-setInterval(() => {
-  const s = Math.floor((Date.now() - t0) / 1000);
-  const p = n => String(n).padStart(2, '0');
-  clock.textContent = `SP ${p(Math.floor(s/3600))}:${p(Math.floor(s/60)%60)}:${p(s%60)}`;
-}, 250);
-
-/* texto tipo maquina de escribir */
-const lines = ['Hola, humanos.', '¿De verdad creían que necesitaban 7 tablas y sus JOIN para saber dónde está un repartidor?'];
-const typed = document.getElementById('typed'); let typer;
-function type(){
-  clearTimeout(typer); typed.textContent = '';
-  const full = lines.join(' '); let i = 0;
-  const step = () => { typed.textContent = full.slice(0, ++i); if (i < full.length) typer = setTimeout(step, full[i-1] === '.' || full[i-1] === '?' ? 420 : 45); };
-  typer = setTimeout(step, reduce ? 0 : 4400);
-}
-
-/* arrancar / repetir intro */
-const els = ['title', 'dlg'].map(id => document.getElementById(id));
+/* entrada suave del titulo y los creditos (tecla R la repite) */
+const els = ['title', 'credits'].map(id => document.getElementById(id));
 function play(){
   els.forEach(e => { e.classList.remove('go'); void e.offsetWidth; e.classList.add('go'); });
-  t0 = Date.now(); type();
 }
-document.getElementById('replay').addEventListener('click', play);
-document.getElementById('start').addEventListener('click', play);
 addEventListener('keydown', e => { if (e.key === 'r' || e.key === 'R') play(); });
 
 /* ===== Alien vivo: deformacion por zonas (tipo Live2D) =====
