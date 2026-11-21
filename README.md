@@ -16,6 +16,8 @@ escenarios/
   comparacion.md                comparación y recomendación
 codigo/
   documentos/                   documentos JSON de ejemplo de cada escenario
+presentacion/
+  index.html                    presentación (doble clic para abrir). Escena 1: intro con el alien
 ```
 
 ## Próximos pasos
