@@ -10,7 +10,7 @@
 
 ## Recomendación: Escenario 2
 
-- Se cuenta como la historia de un día de Carlos, el repartidor.
+- Se cuenta como la historia de un día de Pedro, el repartidor.
 - Cada integrante puede defender un momento del día (crear, buscar, actualizar, eliminar).
 - El arreglo `incidentes` es un buen argumento de por qué conviene NoSQL: en Oracle no existía una tabla para eso.
 

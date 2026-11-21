@@ -2,16 +2,16 @@
 
 ## 1. Cómo es el día hoy
 
-Son las 8:00 en la bodega de una tienda de retail en **Puerto Montt**. **Carlos**, el repartidor, recibe **15 pedidos** para entregar en el día.
+Son las 8:00 en la bodega de una tienda de retail en **Puerto Montt**. **Pedro**, el repartidor, recibe **15 pedidos** para entregar en el día.
 
 En la Evaluación 2, toda esa información quedó **repartida en Oracle**:
 
-- Los datos de Carlos están en `usuario`.
+- Los datos de Pedro están en `usuario`.
 - El camión está en `vehiculo`.
 - La ruta está en `ruta`.
 - Cada pedido está en `pedido`, con su `cliente`, su `direccion` y su `factura`.
 
-Cuando Carlos abre la app para ver su día, el sistema tiene que **unir 7 a 10 tablas** con JOIN para armar una sola pantalla. Además, durante el recorrido pasan cosas que el modelo de tablas no tenía previstas:
+Cuando Pedro abre la app para ver su día, el sistema tiene que **unir 7 a 10 tablas** con JOIN para armar una sola pantalla. Además, durante el recorrido pasan cosas que el modelo de tablas no tenía previstas:
 
 - Un pinchazo de neumático.
 - Un desvío por un corte de calle.
@@ -25,7 +25,7 @@ Guardar cada **ruta del día** como **un solo documento** en MongoDB Atlas: la *
 
 > 📄 Un documento = un repartidor + un camión + un día de trabajo, con todas sus paradas y todo lo que pasó.
 
-- **Al empezar el día:** la app de Carlos descarga **un solo documento** y ya tiene todo.
+- **Al empezar el día:** la app de Pedro descarga **un solo documento** y ya tiene todo.
 - **Al terminar:** Logística abre **ese mismo documento** y ve cómo salió la ruta completa.
 
 **Oracle no desaparece.** Sigue guardando usuarios, facturas y catálogos (lo formal y transaccional). MongoDB guarda la **operación del día**, que cambia y crece en terreno.
@@ -56,7 +56,7 @@ Código completo: [`codigo/documentos/escenario_2_hoja_ruta.js`](../codigo/docum
 | 🔍 13:00 | Rutas con más de 30 km recorridos | `find({ km_recorridos: { $gte: 30 } })` + `sort` + `limit` |
 | 🔍 15:00 | Rutas con alguna entrega fallida | `find({ "paradas.estado": "FALLIDO" })` |
 | 📋 15:30 | ¿Qué tipos de camión salieron hoy? | `distinct("vehiculo.tipo")` |
-| ✏️ 11:20 | Carlos avanza 12 km más | `updateOne` + `$inc: { km_recorridos: 12 }` |
+| ✏️ 11:20 | Pedro avanza 12 km más | `updateOne` + `$inc: { km_recorridos: 12 }` |
 | ✏️ 18:00 | Terminan todas las rutas del día | `updateMany` + `$set: { estado: "FINALIZADA" }` |
 | ✏️ 18:05 | Se limpia el campo temporal `activa` | `$unset` |
 | 🗑️ 19:00 | Se borra una ruta creada por error | `deleteOne` |
@@ -64,4 +64,4 @@ Código completo: [`codigo/documentos/escenario_2_hoja_ruta.js`](../codigo/docum
 
 ## 5. Frase para la defensa
 
-> "En Oracle, ver la ruta de Carlos exige unir el usuario, el vehículo, la ruta, los pedidos, los clientes y las direcciones: unas **7 tablas con JOIN**. En MongoDB es **un solo documento**. Además podemos guardar cosas que en Oracle ni siquiera tenían tabla, como los **incidentes del camino**."
+> "En Oracle, ver la ruta de Pedro exige unir el usuario, el vehículo, la ruta, los pedidos, los clientes y las direcciones: unas **7 tablas con JOIN**. En MongoDB es **un solo documento**. Además podemos guardar cosas que en Oracle ni siquiera tenían tabla, como los **incidentes del camino**."

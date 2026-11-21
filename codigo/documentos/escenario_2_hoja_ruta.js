@@ -13,7 +13,7 @@ const hojaRutaEjemplo = {
   activa: true,                              // booleano: se limpia con $unset
 
   repartidor: {                              // SUBDOCUMENTO
-    nombre: "Carlos Soto",
+    nombre: "Pedro Muñoz",
     rut: "18.456.789-0",
     telefono: "+56 9 8765 4321"
   },

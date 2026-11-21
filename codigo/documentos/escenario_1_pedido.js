@@ -27,7 +27,7 @@ const pedidoEjemplo = {
 
   ruta: {                                    // SUBDOCUMENTO
     codigo: "R-07",
-    operario: "Carlos Soto",
+    operario: "Pedro Muñoz",
     vehiculo: "FURGON-02"
   },
 
