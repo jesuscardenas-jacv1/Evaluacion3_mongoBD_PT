@@ -94,10 +94,79 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .b-sol b{color:var(--acc);font-weight:600}
 .b-sol strong{color:var(--txt);font-weight:600}
 
+/* ===== laminas 02 a 05 ===== */
+.b-left.narrow{width:30vw}
+.b-panel.wide{width:57vw}
+.b-left .lead.sm{font-size:clamp(15px,1.25vw,18px)}
+.big{position:absolute;left:-2vw;top:50%;transform:translateY(-56%);z-index:-1;pointer-events:none;
+  font:700 52vh/1 var(--head);color:transparent;-webkit-text-stroke:2px rgba(0,237,100,.13)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.4vh}
+.chips code{font:500 clamp(12px,1vw,14px) var(--mono);color:var(--acc);background:rgba(17,20,25,.82);
+  border:1px solid var(--line);padding:6px 10px;border-radius:8px}
+.b-left .sec{margin-top:3.6vh}
+
+/* codigo con colores */
+.code{font:500 clamp(12.5px,1.02vw,15px)/1.6 var(--mono);color:#d7dfdb;white-space:pre;overflow-x:auto}
+.code i{font-style:normal}
+.code .c{color:#6b7a75;font-style:italic}.code .s{color:#9be7b8}.code .p{color:#cfe0ff}
+.code .n{color:#ffc46b}.code .k{color:#c7a3ff}.code .o{color:#ff9fc4}.code .f{color:#8fd3ff}
+
+/* operaciones CRUD */
+.op{padding:clamp(10px,1.8vh,17px) clamp(20px,2.4vw,34px)}
+.op + .op{border-top:1px solid var(--line)}
+.op-h{display:flex;align-items:center;gap:12px;margin-bottom:.9vh;font-size:clamp(14px,1.12vw,16.5px);color:var(--txt)}
+.op-h time{flex:none;font:500 clamp(11px,.88vw,13px)/1 var(--mono);color:var(--acc);background:var(--acc-soft);
+  border:1px solid rgba(0,237,100,.3);padding:4px 8px;border-radius:6px}
+.op-h b{font-weight:600}
+.res{margin-top:.7vh;font-size:clamp(11.5px,.92vw,13.5px);color:var(--txt-3)}
+.b-sol code{font:500 .9em var(--mono);color:var(--acc)}
+
+/* lamina 02: comparacion */
+.cmp{display:grid;grid-template-columns:20% 1fr 1fr;font-size:clamp(13px,1.05vw,15.5px)}
+.cmp > div{padding:clamp(8px,1.35vh,13px) clamp(14px,1.6vw,24px);border-top:1px solid var(--line);color:var(--txt-2);line-height:1.45}
+.cmp > .k{font:500 clamp(10.5px,.82vw,12px)/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--txt-3);
+  padding-left:clamp(20px,2.4vw,34px)}
+.cmp > .hd{border-top:0;padding-top:clamp(16px,2.6vh,26px);font:600 clamp(17px,1.4vw,21px) var(--head);color:var(--txt)}
+.cmp > .hd small{display:block;margin-top:4px;font:500 clamp(10.5px,.82vw,12px) var(--mono);letter-spacing:.12em;color:var(--acc)}
+.cmp > .hd.ora small{color:#ff9b7a}
+.cmp b{color:var(--txt);font-weight:600}
+.stat{font:700 clamp(30px,2.8vw,44px)/1 var(--head);color:var(--txt)}
+.stat span{font:500 clamp(13px,1.05vw,15px) var(--body);color:var(--txt-2);margin-left:8px}
+.tbls{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:1.2vh}
+.tbls span{font:500 clamp(11px,.9vw,13px) var(--mono);padding:5px 8px;border:1px solid var(--line);border-radius:6px;
+  background:rgba(255,255,255,.03);color:var(--txt-2)}
+.tbls .miss{border-style:dashed;border-color:rgba(255,155,122,.5);color:#ff9b7a;grid-column:1/-1}
+.minidoc{margin-top:1.2vh;padding:10px 12px;border:1px solid rgba(0,237,100,.3);border-radius:8px;background:rgba(0,237,100,.05);
+  font-size:clamp(11px,.9vw,13px)}
+
+/* lamina 03: documento JSON con bloques por tipo */
+.legend{display:grid;gap:12px;margin-top:3vh}
+.legend > div{padding:10px 14px 10px 16px;background:rgba(17,20,25,.82);border:1px solid var(--line);border-left:3px solid var(--c);border-radius:10px}
+.legend h4{margin:0;font:600 clamp(14px,1.15vw,17px) var(--head);color:var(--txt)}
+.legend h4 code{margin-left:6px;font:500 .82em var(--mono);color:var(--c)}
+.legend p{margin:.5vh 0 0;font-size:clamp(12.5px,1vw,14.5px);line-height:1.45;color:var(--txt-2)}
+.t-sim{--c:#7aa7ff}.t-sub{--c:#c49bff}.t-arr{--c:#ffc46b}.t-ars{--c:#00ed64}
+.jcols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,30px);padding:clamp(14px,2.2vh,22px) clamp(20px,2.4vw,34px) clamp(18px,2.8vh,26px)}
+.json{white-space:normal}
+.json > div{white-space:pre}
+.json .blk{margin:3px 0;padding:2px 0 2px 10px;border-left:3px solid var(--c);border-radius:2px;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--c) 10%,transparent),transparent 75%)}
+
+/* lamina 05: mejoras */
+.fut{padding:clamp(14px,2.2vh,22px) clamp(22px,2.6vw,38px);border-top:1px solid var(--line)}
+.fut ul{list-style:none;margin:1.4vh 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fut li{padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.025);
+  font-size:clamp(13px,1.05vw,15px);line-height:1.4;color:var(--txt-2)}
+.fut li b{display:block;color:var(--txt);font:600 clamp(14px,1.12vw,16px) var(--head);margin-bottom:2px}
+.fut code{font:500 .92em var(--mono);color:var(--acc)}
+
 @media (max-width:900px){
-  .slide.s-intro{overflow:auto}
-  .b-left,.b-panel{position:relative;left:auto;right:auto;top:auto;transform:none;width:auto;margin:7vh 16px 0}
+  .slide.ct{overflow:auto}
+  .b-left,.b-panel,.b-left.narrow,.b-panel.wide{position:relative;left:auto;right:auto;top:auto;transform:none;width:auto;margin:7vh 16px 0}
   .b-panel{margin-bottom:12vh}
+  .big{display:none}
+  .jcols,.fut ul{grid-template-columns:1fr}
+  .cmp{grid-template-columns:1fr 1fr}.cmp > .k{grid-column:1/-1;padding-bottom:0}
 }
 @media (max-width:700px){
   .alien{height:62vh;left:-12vw;bottom:-2vh}
@@ -132,7 +201,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
   </section>
 
   <!-- LAMINA 1: INTRODUCCION (negocio, problema y tecnologias) -->
-  <section class="slide s-intro">
+  <section class="slide s-intro ct">
     <div class="b-left">
       <div data-anim style="--d:.1s">
         <div class="eyebrow">01 · Introducción</div>
@@ -171,6 +240,396 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
       <div class="b-sol" data-anim style="--d:1.1s"><span class="dot"></span>
         <p><b>Nuestra solución:</b> la <strong>Hoja de Ruta Digital</strong>, donde cada ruta del día es <strong>un solo documento</strong>
           en MongoDB Atlas con el repartidor, el camión, las paradas y los incidentes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAMINA 2: RELACIONAL VS NO RELACIONAL (rubrica 20 %) -->
+  <section class="slide ct">
+    <div class="b-left narrow">
+      <div data-anim style="--d:.1s">
+        <div class="eyebrow">02 · Relacional vs no relacional</div>
+        <h2>SQL<br>vs NoSQL</h2>
+        <p class="lead sm">NoSQL significa <b>“Not Only SQL”</b>: no reemplaza a SQL, lo complementa.
+          En nuestra app <b>Oracle y MongoDB conviven</b>, cada uno con lo que hace mejor.</p>
+      </div>
+      <div class="sec" data-anim style="--d:.9s">
+        <div class="lbl">La pregunta clave</div>
+        <p class="lead sm">¿Por qué <b>un documento</b> y no varias tablas con JOIN? Porque la app de Pedro necesita
+          <b>su ruta completa de una sola vez</b>, y en terreno aparecen datos que las tablas no tenían previstos.</p>
+      </div>
+    </div>
+
+    <div class="b-panel wide">
+      <div class="cmp">
+        <div class="k hd"></div>
+        <div class="hd ora" data-anim style="--d:.3s">Oracle<small>RELACIONAL · SQL</small></div>
+        <div class="hd" data-anim style="--d:.4s">MongoDB Atlas<small>DOCUMENTAL · NOSQL</small></div>
+
+        <div class="k">Ver la ruta de Pedro</div>
+        <div data-anim style="--d:.5s"><div class="stat">7<span>tablas unidas con JOIN</span></div>
+          <div class="tbls"><span>usuario</span><span>vehiculo</span><span>ruta</span><span>pedido</span>
+            <span>cliente</span><span>direccion</span><span>factura</span><span class="miss">incidentes: no existe la tabla</span></div></div>
+        <div data-anim style="--d:.6s"><div class="stat">1<span>documento, una consulta</span></div>
+          <div class="minidoc code">{ codigo_ruta, fecha, estado,
+  repartidor: { … },
+  vehiculo:   { … },
+  comunas:    [ … ],
+  paradas:    [ { … } ],
+  incidentes: [ { … } ] }</div></div>
+
+        <div class="k">Estructura</div>
+        <div data-anim style="--d:.7s">Tablas con <b>columnas fijas</b></div>
+        <div data-anim style="--d:.7s">Documentos JSON <b>flexibles</b></div>
+
+        <div class="k">Relaciones</div>
+        <div data-anim style="--d:.8s">Claves foráneas y <b>JOIN</b></div>
+        <div data-anim style="--d:.8s">Datos <b>anidados</b> en el mismo documento</div>
+
+        <div class="k">Ventaja</div>
+        <div data-anim style="--d:.9s"><b>Integridad</b> y transacciones: ideal para facturas</div>
+        <div data-anim style="--d:.9s">Se lee en <b>una consulta</b> y se agregan campos sin migrar</div>
+
+        <div class="k">Desventaja</div>
+        <div data-anim style="--d:1s">Cambiar el esquema cuesta y una pantalla exige <b>muchas uniones</b></div>
+        <div data-anim style="--d:1s">Datos <b>repetidos</b> y sin claves foráneas: la app cuida la consistencia</div>
+
+        <div class="k">Cuándo conviene</div>
+        <div data-anim style="--d:1.1s">Usuarios, <b>facturas</b> y catálogos</div>
+        <div data-anim style="--d:1.1s">La <b>operación del día</b>, que cambia en terreno</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAMINA 3: MODELO DOCUMENTAL (rubrica 20 %) -->
+  <section class="slide ct">
+    <div class="b-left narrow">
+      <div data-anim style="--d:.1s">
+        <div class="eyebrow">03 · Modelo documental</div>
+        <h2>Una ruta,<br>un documento</h2>
+        <p class="lead sm">Base <b>reparto_db</b> · colección <b>hojas_ruta</b>. Cada campo está donde la app lo necesita.</p>
+      </div>
+      <div class="legend">
+        <div class="t-sim" data-anim style="--d:.6s"><h4>Campos simples</h4>
+          <p>Texto, fecha, número y booleano. <b>estado</b> cambia con $set, <b>km</b> sube con $inc y <b>activa</b> se limpia con $unset.</p></div>
+        <div class="t-sub" data-anim style="--d:.75s"><h4>Subdocumentos <code>{ }</code></h4>
+          <p>El repartidor y el vehículo siempre se leen junto con la ruta: anidarlos evita un JOIN.</p></div>
+        <div class="t-arr" data-anim style="--d:.9s"><h4>Arreglo de textos <code>[ ]</code></h4>
+          <p>Una ruta pasa por varias comunas. Se filtra con $in, $all y $nin.</p></div>
+        <div class="t-ars" data-anim style="--d:1.05s"><h4>Arreglos de subdocumentos <code>[ { } ]</code></h4>
+          <p>Cantidad variable: 5 o 30 paradas, 0 o varios incidentes. En SQL serían tablas aparte.</p></div>
+      </div>
+    </div>
+
+    <div class="b-panel wide">
+      <div class="ph" data-anim style="--d:.3s">
+        <div class="eyebrow">reparto_db.hojas_ruta</div>
+        <h3>La hoja de ruta de Pedro del 21 de noviembre</h3>
+      </div>
+      <div class="jcols">
+        <div class="code json" data-anim style="--d:.5s">
+          <div>{</div>
+          <div class="blk t-sim">  codigo_ruta: "HR-2026-11-21-07",
+  fecha: new Date("2026-11-21"),
+  estado: "EN_CURSO",
+  km_recorridos: 42,
+  activa: true,</div>
+          <div class="blk t-sub">  repartidor: {
+    nombre: "Pedro Muñoz",
+    rut: "18.456.789-0",
+    telefono: "+56 9 8765 4321"
+  },</div>
+          <div class="blk t-sub">  vehiculo: {
+    patente: "KJTR-45",
+    tipo: "Furgón",
+    capacidad_kg: 800
+  },</div>
+          <div class="blk t-arr">  comunas: ["Puerto Montt", "Alerce"],</div>
+        </div>
+        <div class="code json" data-anim style="--d:.7s">
+          <div class="blk t-ars">  paradas: [
+    { orden: 1, codigo_pedido: "PED-1001",
+      cliente: "Ana Paz", monto: 89990,
+      direccion: "Av. Angelmó 1520",
+      estado: "ENTREGADO" },
+    { orden: 2, codigo_pedido: "PED-1002",
+      cliente: "Luis Rojas", monto: 25000,
+      direccion: "Los Notros 233",
+      estado: "FALLIDO",
+      razon_fallo: "CLIENTE_AUSENTE" }
+  ],</div>
+          <div class="blk t-ars">  incidentes: [
+    { tipo: "PINCHAZO", hora: "11:20",
+      detalle: "Rueda trasera, 25 min" }
+  ]</div>
+          <div>}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAMINA 4A: CRUD · CREATE -->
+  <section class="slide ct">
+    <div class="b-left narrow">
+      <span class="big">C</span>
+      <div data-anim style="--d:.1s">
+        <div class="eyebrow">04 · CRUD · Create</div>
+        <h2>Crear las rutas<br>del día</h2>
+        <p class="lead sm">A las 07:30 Logística carga en Atlas las hojas de ruta de todos los repartidores.
+          Más tarde se suma una <b>ruta extra</b> por alta demanda.</p>
+      </div>
+      <div class="sec" data-anim style="--d:.9s">
+        <div class="lbl">Operaciones</div>
+        <div class="chips"><code>insertMany()</code><code>insertOne()</code></div>
+      </div>
+    </div>
+
+    <div class="b-panel wide">
+      <div class="op" data-anim style="--d:.3s">
+        <div class="op-h"><time>07:30</time><b>Lote del día: 10 rutas (7 en curso, 1 cancelada y 2 de prueba)</b></div>
+        <div class="code">db.hojas_ruta.insertMany([
+  { codigo_ruta: "HR-2026-11-21-01", estado: "EN_CURSO",
+    repartidor: { nombre: "Camila Díaz" }, … },
+  { codigo_ruta: "HR-2026-11-21-07", estado: "EN_CURSO",
+    repartidor: { nombre: "Pedro Muñoz" }, … },
+  …
+])</div>
+        <div class="res code">→ { acknowledged: true, insertedIds: { '0': …, '9': … } }</div>
+      </div>
+      <div class="op" data-anim style="--d:.6s">
+        <div class="op-h"><time>08:10</time><b>Se suma una ruta extra a Puerto Varas</b></div>
+        <div class="code">db.hojas_ruta.insertOne({
+  codigo_ruta: "HR-2026-11-21-09", fecha: new Date("2026-11-21"),
+  estado: "EN_CURSO", km_recorridos: 0, activa: true,
+  repartidor: { nombre: "Sofía Vera", rut: "19.234.567-8" },
+  vehiculo: { patente: "LXBP-21", tipo: "Camión", capacidad_kg: 3500 },
+  comunas: ["Puerto Varas"],
+  paradas: [ { orden: 1, codigo_pedido: "PED-1090", estado: "PENDIENTE" } ],
+  incidentes: []
+})</div>
+        <div class="res code">→ { acknowledged: true, insertedId: ObjectId('…') }</div>
+      </div>
+      <div class="b-sol" data-anim style="--d:1s"><span class="dot"></span>
+        <p><b>Esquema flexible:</b> cada ruta trae su propia cantidad de paradas e incidentes. MongoDB no obliga a que todos los documentos sean iguales.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAMINA 4B: CRUD · READ (filtros) -->
+  <section class="slide ct">
+    <div class="b-left narrow">
+      <span class="big">R</span>
+      <div data-anim style="--d:.1s">
+        <div class="eyebrow">04 · CRUD · Read 1/2</div>
+        <h2>Buscar<br>rutas</h2>
+        <p class="lead sm"><b>find()</b> es el SELECT de MongoDB. Durante el día Logística filtra las rutas
+          por <b>comuna</b>, por <b>kilómetros</b> y por lo que pasó en el camino.</p>
+      </div>
+      <div class="sec" data-anim style="--d:.9s">
+        <div class="lbl">Operadores</div>
+        <div class="chips"><code>$in</code><code>$all</code><code>$nin</code><code>$gte</code><code>$lte</code><code>$or</code></div>
+      </div>
+    </div>
+
+    <div class="b-panel wide">
+      <div class="op" data-anim style="--d:.3s">
+        <div class="op-h"><time>09:00</time><b>Rutas que pasan por Alerce</b></div>
+        <div class="code">db.hojas_ruta.find({ comunas: { $in: ["Alerce"] } })</div>
+      </div>
+      <div class="op" data-anim style="--d:.42s">
+        <div class="op-h"><time>09:30</time><b>Rutas que cubren Puerto Montt y también Alerce</b></div>
+        <div class="code">db.hojas_ruta.find({ comunas: { $all: ["Puerto Montt", "Alerce"] } })</div>
+      </div>
+      <div class="op" data-anim style="--d:.54s">
+        <div class="op-h"><time>10:00</time><b>Rutas que no van a Puerto Varas</b></div>
+        <div class="code">db.hojas_ruta.find({ comunas: { $nin: ["Puerto Varas"] } })</div>
+      </div>
+      <div class="op" data-anim style="--d:.66s">
+        <div class="op-h"><time>13:00</time><b>Rutas que llevan entre 20 y 40 km</b></div>
+        <div class="code">db.hojas_ruta.find({ km_recorridos: { $gte: 20, $lte: 40 } })</div>
+      </div>
+      <div class="op" data-anim style="--d:.78s">
+        <div class="op-h"><time>14:00</time><b>Rutas con un pinchazo o que van atrasadas</b></div>
+        <div class="code">db.hojas_ruta.find({ $or: [
+  { "incidentes.tipo": "PINCHAZO" },
+  { estado: "ATRASADA" }
+] })</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAMINA 4C: CRUD · READ (subdocumentos, proyeccion, sort, limit, distinct) -->
+  <section class="slide ct">
+    <div class="b-left narrow">
+      <span class="big">R</span>
+      <div data-anim style="--d:.1s">
+        <div class="eyebrow">04 · CRUD · Read 2/2</div>
+        <h2>Buscar dentro<br>del documento</h2>
+        <p class="lead sm">Con la <b>notación con punto</b> se busca dentro de los subdocumentos y de los arreglos,
+          y se arman reportes con solo los campos necesarios.</p>
+      </div>
+      <div class="sec" data-anim style="--d:.9s">
+        <div class="lbl">Herramientas</div>
+        <div class="chips"><code>"paradas.estado"</code><code>{ _id: 0 }</code><code>sort()</code><code>limit()</code><code>distinct()</code></div>
+      </div>
+    </div>
+
+    <div class="b-panel wide">
+      <div class="op" data-anim style="--d:.3s">
+        <div class="op-h"><time>15:00</time><b>Rutas con alguna entrega fallida</b></div>
+        <div class="code">db.hojas_ruta.find({ "paradas.estado": "FALLIDO" })</div>
+      </div>
+      <div class="op" data-anim style="--d:.42s">
+        <div class="op-h"><time>15:10</time><b>Rutas hechas en furgón</b></div>
+        <div class="code">db.hojas_ruta.find({ "vehiculo.tipo": "Furgón" })</div>
+      </div>
+      <div class="op" data-anim style="--d:.54s">
+        <div class="op-h"><time>15:20</time><b>Las 3 rutas más largas, sin el _id</b></div>
+        <div class="code">db.hojas_ruta.find(
+  { },
+  { _id: 0, codigo_ruta: 1, "repartidor.nombre": 1, km_recorridos: 1 }
+).sort({ km_recorridos: -1 }).limit(3)</div>
+        <div class="res code">→ { codigo_ruta: "HR-2026-11-21-07", repartidor: { nombre: "Pedro Muñoz" }, km_recorridos: 42 } …</div>
+      </div>
+      <div class="op" data-anim style="--d:.66s">
+        <div class="op-h"><time>15:30</time><b>¿Qué tipos de vehículo salieron hoy?</b></div>
+        <div class="code">db.hojas_ruta.distinct("vehiculo.tipo")</div>
+        <div class="res code">→ [ "Camión", "Furgón" ]</div>
+      </div>
+      <div class="b-sol" data-anim style="--d:1s"><span class="dot"></span>
+        <p><b>Ojo:</b> <code>{ paradas: { estado: "FALLIDO" } }</code> solo encuentra la parada si el subdocumento es
+          <strong>exactamente igual</strong>. Por eso usamos <code>"paradas.estado"</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAMINA 4D: CRUD · UPDATE -->
+  <section class="slide ct">
+    <div class="b-left narrow">
+      <span class="big">U</span>
+      <div data-anim style="--d:.1s">
+        <div class="eyebrow">04 · CRUD · Update</div>
+        <h2>Actualizar<br>en terreno</h2>
+        <p class="lead sm">La hoja de ruta cambia durante el día: Pedro avanza kilómetros, sufre un pinchazo y al final
+          todas las rutas se cierran.</p>
+      </div>
+      <div class="sec" data-anim style="--d:.9s">
+        <div class="lbl">Operaciones</div>
+        <div class="chips"><code>updateOne()</code><code>updateMany()</code><code>$inc</code><code>$set</code><code>$unset</code></div>
+      </div>
+    </div>
+
+    <div class="b-panel wide">
+      <div class="op" data-anim style="--d:.3s">
+        <div class="op-h"><time>11:20</time><b>Pedro avanza 12 km más</b></div>
+        <div class="code">db.hojas_ruta.updateOne(
+  { codigo_ruta: "HR-2026-11-21-07" },
+  { $inc: { km_recorridos: 12 } }
+)</div>
+        <div class="res code">→ { matchedCount: 1, modifiedCount: 1 }</div>
+      </div>
+      <div class="op" data-anim style="--d:.45s">
+        <div class="op-h"><time>11:25</time><b>El pinchazo lo deja atrasado</b></div>
+        <div class="code">db.hojas_ruta.updateOne(
+  { codigo_ruta: "HR-2026-11-21-07" },
+  { $set: { estado: "ATRASADA" } }
+)</div>
+      </div>
+      <div class="op" data-anim style="--d:.6s">
+        <div class="op-h"><time>18:00</time><b>Terminan todas las rutas del día</b></div>
+        <div class="code">db.hojas_ruta.updateMany(
+  { estado: { $in: ["EN_CURSO", "ATRASADA"] } },
+  { $set: { estado: "FINALIZADA" } }
+)</div>
+      </div>
+      <div class="op" data-anim style="--d:.75s">
+        <div class="op-h"><time>18:05</time><b>Se limpia el campo temporal activa</b></div>
+        <div class="code">db.hojas_ruta.updateMany({ estado: "FINALIZADA" }, { $unset: { activa: "" } })</div>
+      </div>
+      <div class="b-sol" data-anim style="--d:1s"><span class="dot"></span>
+        <p><code>$set</code> <strong>cambia</strong> un valor · <code>$inc</code> <strong>suma o resta</strong> · <code>$unset</code> <strong>elimina</strong> el campo del documento.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAMINA 4E: CRUD · DELETE -->
+  <section class="slide ct">
+    <div class="b-left narrow">
+      <span class="big">D</span>
+      <div data-anim style="--d:.1s">
+        <div class="eyebrow">04 · CRUD · Delete</div>
+        <h2>Eliminar<br>con cuidado</h2>
+        <p class="lead sm">Al cierre del día se borran solo los registros que no sirven: la ruta <b>cancelada</b>
+          y las rutas de <b>prueba</b>.</p>
+      </div>
+      <div class="sec" data-anim style="--d:.9s">
+        <div class="lbl">Operaciones</div>
+        <div class="chips"><code>deleteOne()</code><code>deleteMany()</code></div>
+      </div>
+    </div>
+
+    <div class="b-panel wide">
+      <div class="op" data-anim style="--d:.3s">
+        <div class="op-h"><time>19:00</time><b>Se borra la ruta cancelada (código único + estado)</b></div>
+        <div class="code">db.hojas_ruta.deleteOne({ codigo_ruta: "HR-2026-11-21-05", estado: "CANCELADA" })</div>
+        <div class="res code">→ { acknowledged: true, deletedCount: 1 }</div>
+      </div>
+      <div class="op" data-anim style="--d:.5s">
+        <div class="op-h"><time>19:10</time><b>Primero revisamos qué rutas de prueba hay</b></div>
+        <div class="code">db.hojas_ruta.find({ estado: "PRUEBA" }, { _id: 0, codigo_ruta: 1 })</div>
+      </div>
+      <div class="op" data-anim style="--d:.7s">
+        <div class="op-h"><time>19:12</time><b>Y luego borramos solo esas</b></div>
+        <div class="code">db.hojas_ruta.deleteMany({ estado: "PRUEBA" })</div>
+        <div class="res code">→ { acknowledged: true, deletedCount: 2 }</div>
+      </div>
+      <div class="b-sol" data-anim style="--d:1s"><span class="dot"></span>
+        <p><b>Condición segura:</b> siempre filtramos por un código único o un estado de negocio.
+          Nunca <code>deleteMany({ })</code>, que borraría la colección completa.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAMINA 5: CONCLUSION -->
+  <section class="slide ct">
+    <div class="b-left narrow">
+      <div data-anim style="--d:.1s">
+        <div class="eyebrow">05 · Conclusión</div>
+        <h2>Valor para<br>el negocio</h2>
+        <p class="lead sm">La <b>Hoja de Ruta Digital</b> ordena el reparto: lo que antes estaba repartido en 7 tablas,
+          o ni siquiera se guardaba, ahora vive en <b>un solo documento</b> que se consulta y actualiza al momento.</p>
+      </div>
+      <div class="sec" data-anim style="--d:.9s">
+        <div class="lbl">Lo que demostramos</div>
+        <div class="chips"><code>insertOne / insertMany</code><code>find + operadores</code><code>updateOne / updateMany</code><code>deleteOne / deleteMany</code></div>
+      </div>
+    </div>
+
+    <div class="b-panel wide">
+      <div class="ph" data-anim style="--d:.3s">
+        <div class="eyebrow">Cómo aporta valor al negocio</div>
+        <h3>Logística ve cada ruta completa, sin armar nada a mano</h3>
+      </div>
+      <div class="b-row" data-anim style="--d:.45s"><span class="n">01</span><div>
+        <h4>Un formato común para todos</h4>
+        <p>Todos los repartidores registran sus entregas en el mismo documento: Logística sabe qué rutas terminaron.</p>
+      </div></div>
+      <div class="b-row" data-anim style="--d:.6s"><span class="n">02</span><div>
+        <h4>Fallos e incidentes medibles</h4>
+        <p>Con <i>razon_fallo</i> e <i>incidentes</i> se puede contar cuántas entregas fallan y por qué.</p>
+      </div></div>
+      <div class="b-row" data-anim style="--d:.75s"><span class="n">03</span><div>
+        <h4>Estado al momento</h4>
+        <p>$set y $inc actualizan el estado y los kilómetros en vivo: la base para avisar al cliente sin hacerlo a mano.</p>
+      </div></div>
+      <div class="fut" data-anim style="--d:1s">
+        <div class="lbl">Mejoras a futuro</div>
+        <ul>
+          <li><b>Índices</b>en <code>fecha</code> y <code>comunas</code> para buscar más rápido</li>
+          <li><b>Geolocalización</b>con GeoJSON y <code>$near</code> para la parada más cercana</li>
+          <li><b>Aggregation</b>reportes de fallos por comuna y por repartidor</li>
+          <li><b>Atlas Charts</b>un panel en vivo para Logística</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -565,6 +1024,18 @@ function startAlien(){
 }
 addEventListener('resize', sizeGL);
 if (aImg.complete) startAlien(); else aImg.addEventListener('load', startAlien);
+
+/* colores del codigo: comentarios, textos, operadores $, palabras clave, metodos, campos y numeros */
+const HL = /(\/\/.*)|("(?:[^"\\]|\\.)*")|(\$\w+)|\b(db|new|true|false|null)\b|\.(\w+)(?=\()|([A-Za-z_][\w.]*)(?=\s*:)|(-?\b\d+(?:\.\d+)?\b)/g;
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const hl = s => esc(s).replace(HL, (m, c, st, o, k, f, p, n) =>
+  c ? `<i class="c">${c}</i>` : st ? `<i class="s">${st}</i>` : o ? `<i class="o">${o}</i>` : k ? `<i class="k">${k}</i>` :
+  f ? `.<i class="f">${f}</i>` : p ? `<i class="p">${p}</i>` : `<i class="n">${n}</i>`);
+document.querySelectorAll('.code').forEach(el => {
+  const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), list = [];
+  while (w.nextNode()) list.push(w.currentNode);
+  for (const t of list){ if (!t.nodeValue.trim()) continue; const sp = document.createElement('span'); sp.innerHTML = hl(t.nodeValue); t.replaceWith(sp); }
+});
 
 addEventListener('resize', build);
 build(); enter(0); requestAnimationFrame(frame);
