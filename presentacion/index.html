@@ -45,8 +45,8 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 /* --- laminas: solo una visible; la entrada de cada elemento usa --d (retraso) --- */
 .slide{position:absolute;inset:0;visibility:hidden}
 .slide.on{visibility:visible}
-.slide.leave{opacity:0;transform:scale(1.12);filter:blur(3px);
-  transition:opacity .7s ease-in,transform .9s cubic-bezier(.5,0,.9,.4),filter .7s ease-in}
+/* la lamina que sale solo se desvanece: agrandarla con scale() bajaba la fluidez a la mitad en pantalla completa */
+.slide.leave{opacity:0;transition:opacity .6s ease-in}
 .stage{--k:1}.stage.fast{--k:.45}
 [data-anim]{opacity:0}
 [data-anim].go{animation:fadeup 1s ease-out calc(var(--d,0s) * var(--k)) forwards}
@@ -641,13 +641,13 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 <script>
 {
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const space = document.getElementById('space'), sx = space.getContext('2d');
+const space = document.getElementById('space'), sx = space.getContext('2d', {alpha: false});
 let W = 0, H = 0, DPR = 1, stars = [], galaxy = [], mx = 0, my = 0, shoot = null, warp = 0;
 
 function rnd(a, b){ return a + Math.random() * (b - a); }
 
 function build(){
-  DPR = Math.min(devicePixelRatio || 1, 2);
+  DPR = 1;  /* el fondo a resolucion 1:1 basta y es mucho mas liviano en pantallas grandes */
   W = innerWidth; H = innerHeight;
   space.width = Math.max(1, W * DPR); space.height = Math.max(1, H * DPR);
   sx.setTransform(DPR, 0, 0, DPR, 0, 0);
@@ -660,43 +660,58 @@ function build(){
   }));
   galaxy = Array.from({length: 6000}, () => {
     const arm = Math.floor(Math.random() * 2), d = Math.pow(Math.random(), 1.1);
+    const b = rnd(.35, 1);
     return { d, a: arm * Math.PI + d * 6 + rnd(-.3, .3) * (1 - d * .4),
-      off: rnd(-.04, .04), r: rnd(.4, 1.4), b: rnd(.35, 1) };
+      off: rnd(-.04, .04), r: rnd(.4, 1.4),
+      col: d < .25 ? `rgba(255,236,210,${b*.8})` : (d > .5 && b > .9 ? `rgba(220,170,230,${(1-d)*.7})` : `rgba(175,210,235,${b*(1-d*.8)*.6})`) };
   });
+  bg.width = space.width; bg.height = space.height; bgT = -1e9;
 }
 
-function drawNebula(){
-  const g1 = sx.createRadialGradient(W*.72, H*.35, 0, W*.72, H*.35, W*.45);
+/* nebulosa y galaxia se pintan en una imagen aparte (bg) y solo se repintan cada medio segundo,
+   porque la galaxia gira muy lento. En cada cuadro solo se copia esa imagen: asi va fluido en pantalla completa. */
+const bg = document.createElement('canvas'), bx = bg.getContext('2d');
+let bgT = -1e9;
+
+function drawNebula(g){
+  const g1 = g.createRadialGradient(W*.72, H*.35, 0, W*.72, H*.35, W*.45);
   g1.addColorStop(0, 'rgba(40,90,110,.28)'); g1.addColorStop(1, 'rgba(0,0,0,0)');
-  sx.fillStyle = g1; sx.fillRect(0, 0, W, H);
-  const g2 = sx.createRadialGradient(W*.25, H*.7, 0, W*.25, H*.7, W*.5);
+  g.fillStyle = g1; g.fillRect(0, 0, W, H);
+  const g2 = g.createRadialGradient(W*.25, H*.7, 0, W*.25, H*.7, W*.5);
   g2.addColorStop(0, 'rgba(30,70,65,.35)'); g2.addColorStop(1, 'rgba(0,0,0,0)');
-  sx.fillStyle = g2; sx.fillRect(0, 0, W, H);
-  const g3 = sx.createRadialGradient(W*.9, H*.85, 0, W*.9, H*.85, W*.3);
+  g.fillStyle = g2; g.fillRect(0, 0, W, H);
+  const g3 = g.createRadialGradient(W*.9, H*.85, 0, W*.9, H*.85, W*.3);
   g3.addColorStop(0, 'rgba(90,50,110,.18)'); g3.addColorStop(1, 'rgba(0,0,0,0)');
-  sx.fillStyle = g3; sx.fillRect(0, 0, W, H);
+  g.fillStyle = g3; g.fillRect(0, 0, W, H);
 }
 
-function drawGalaxy(t){
-  const cx = W * (W < 700 ? .62 : .84) - mx * 6, cy = H * (W < 700 ? .3 : .3) - my * 6;
+function drawGalaxy(g, t){
+  const cx = W * (W < 700 ? .62 : .84), cy = H * .3;
   const R = Math.min(W, H) * .62, rot = t * .000015;
-  const core = sx.createRadialGradient(cx, cy, 0, cx, cy, R * .3);
+  const core = g.createRadialGradient(cx, cy, 0, cx, cy, R * .3);
   core.addColorStop(0, 'rgba(255,240,215,.5)'); core.addColorStop(.4, 'rgba(160,190,220,.15)');
   core.addColorStop(1, 'rgba(0,0,0,0)');
-  sx.fillStyle = core; sx.beginPath(); sx.arc(cx, cy, R * .3, 0, 7); sx.fill();
+  g.fillStyle = core; g.beginPath(); g.arc(cx, cy, R * .3, 0, 7); g.fill();
   for (const p of galaxy){
     const a = p.a + rot, rr = p.d * R;
     const x0 = Math.cos(a) * rr + p.off * R, y0 = Math.sin(a) * rr * .38 + p.off * R * .25, x = cx + x0 * .96 - y0 * .28, y = cy + x0 * .28 + y0 * .96;
-    sx.fillStyle = p.d < .25 ? `rgba(255,236,210,${p.b*.8})` : (p.d > .5 && p.b > .9 ? `rgba(220,170,230,${(1-p.d)*.7})` : `rgba(175,210,235,${p.b*(1-p.d*.8)*.6})`);
-    sx.fillRect(x, y, p.r, p.r);
+    g.fillStyle = p.col;
+    g.fillRect(x, y, p.r, p.r);
   }
+}
+
+function paintBg(t){
+  bgT = t;
+  bx.setTransform(1, 0, 0, 1, 0, 0); bx.clearRect(0, 0, bg.width, bg.height);
+  bx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  drawNebula(bx); drawGalaxy(bx, t);
 }
 
 function frame(t){
   tickTransition(t);
+  if (t - bgT > 500 && !trans) paintBg(t);
   sx.fillStyle = '#03070c'; sx.fillRect(0, 0, W, H);
-  drawNebula();
-  sx.globalAlpha = 1 - warp * .85; drawGalaxy(t); sx.globalAlpha = 1;
+  sx.globalAlpha = 1 - warp * .85; sx.drawImage(bg, -mx * 6, -my * 6, W, H); sx.globalAlpha = 1;
   /* hiperespacio: resplandor verde en el centro */
   if (warp > .01){
     const g = sx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W, H) * .5);
@@ -935,7 +950,8 @@ function alienFrame(ms){
     glint *= Math.exp(-dt * 2.2);
   }
   const b = reduce ? 0 : breath(t), bs = reduce ? 0 : breath(t - .45), bh = reduce ? 0 : breath(t - .8);
-  if (glOk){
+  /* fuera de la portada el alien no se ve: no se dibuja para no gastar la tarjeta grafica */
+  if (glOk && !(stage.classList.contains('away') && !trans)){
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.uniform1f(U.uTheta, theta.x);
     gl.uniform1f(U.uBreath, b);
